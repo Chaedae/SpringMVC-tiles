@@ -22,7 +22,7 @@
 		<div>User ID : ${user.userId} / User Name : ${user.userNm}</div> 
 		<div>
 			<table class="table" style="border: 1px solid black;">
-				<caption align="center"><h1>User List</h1></caption>
+				<caption style="text-align: center;"><h1>User List</h1></caption>
 				<thead>
 					<tr>
 						<th>ID</th>

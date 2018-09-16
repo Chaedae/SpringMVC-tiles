@@ -9,6 +9,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesView;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 /**
  * <h1>Spring WebMVC Configuration</h1>
@@ -20,6 +23,37 @@ import org.springframework.web.servlet.view.JstlView;
 public class ServletConfig implements WebMvcConfigurer {
 
 	/**
+	 * Apache-Tiles Configuration
+	 * @return tilesViewResolver
+	 */
+	@Bean
+    public TilesViewResolver viewResolver() {
+        TilesViewResolver viewResolver = new TilesViewResolver();
+        viewResolver.setViewClass(TilesView.class);
+        viewResolver.setOrder(1);
+        
+        return viewResolver;
+    }
+	
+	/**
+	 * Apache-Tiles Init
+	 * @return
+	 */
+	@Bean
+	public TilesConfigurer getTilesConfigurer() {
+		TilesConfigurer tilesConfigurer = new TilesConfigurer();
+        tilesConfigurer.setDefinitions(new String[]{
+                "/WEB-INF/tiles/layouts/tiles.xml"
+        });
+        tilesConfigurer.setCheckRefresh(true);
+//        tilesConfigurer.setDefinitionsFactoryClass(TilesDefinitionsConfig.class);
+//        
+//        TilesDefinitionsConfig.addDefinitions();
+        
+        return tilesConfigurer;
+	}
+	
+	/**
 	 * ViewResolver Configuration
 	 * @return viewResolver
 	 */
@@ -29,6 +63,7 @@ public class ServletConfig implements WebMvcConfigurer {
 		resolver.setViewClass(JstlView.class);
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
+		resolver.setOrder(2);
 		
 		return resolver;
 	}
